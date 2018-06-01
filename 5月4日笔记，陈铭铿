@@ -1,0 +1,116 @@
+搭建HPC
+存储管理nfs
+ 	LUSTRE 开源，并用存储
+	GPFS
+CLUSTER 集群
+调度管理
+Torque 排队管理
+Opendps
+pbspro
+Slurm
+Lsf
+
+
+用node01主机node02主机集群
+
+1.服务机安装ypserv ypbind 
+Client ypbind
+
+2.服务机 NIS相关配置
+#nisdomainname
+/etc/sysconfig/network
+添加NISDOMAIN=hpc
+systemctl start yppasswdd
+
+useradd test 
+echo 123456 | passwd --stdin test
+useradd test1
+echo 123456 | passwd --stdin test1
+
+刷新数据库用户文件
+cd  /var/yp 
+#make 
+
+#nisdomainname 
+vim /etc/yp.conf
+domain hpc server 192.168.4.254
+
+同步数据库
+vim /etc/nsswitch.conf +33
+passwd : files nis sss
+shadow : files nis sss
+group : files nis sss
+
+systemctl start ypserv
+
+3.客户机： ypbind 
+与上服务端3文件一样
+
+systemctl start ypbind 
+
+ypcat passwd 查看用户
+
+ssh test@192.168.4.254 
+##################################################################################
+
+tmux命令   #编译随时保存 
+安装服务tmux
+
+
+#tmux 进入
+#exit 退出
+tmux ls  #查看
+tmux attach -t 0 #进入
+tmux new -s s1 -w 01 #新建 
+tmux kill-session -t 0 #杀掉
+绿条下进行快捷键
+ctrl+b c #创建
+ctrl+b d #分离会话
+ctrl+b w #或p或n  #会话切换
+ctrl+b y #杀掉
+ctrl+b & #关闭=exit
+
+面板
+左右分割 ctrl+b %
+ctrl+b o 
+ctrl+b 左右
+上下分割 ctrl+b "
+
+
+关闭面板 ctrl+b x 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
